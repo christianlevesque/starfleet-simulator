@@ -1,10 +1,19 @@
 import { Ship } from "@/game/ships/types"
 import { Weapon } from "@/game/weapons/types"
 import { calculateDistance } from "@/game/utils"
+import { ComponentEffect } from "@/game/types"
 
 export function weaponCanFire(ship: Ship, weapon: Weapon): boolean {
 	if (ship.energy < weapon.useCost)
 		return false
+
+	if (!weapon.active) {
+		return false
+	}
+
+	if (weapon.activeEffects.findIndex(e => e.effect === ComponentEffect.Disabled) > -1) {
+		return false
+	}
 
 	return true
 }

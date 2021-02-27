@@ -1,4 +1,4 @@
-import { Ship, ShipClass, ShipFaction } from "@/game/ships/types"
+import { Ship, ShipClass, ShipFaction, ShipReadyStatus } from "@/game/ships/types"
 import { disruptorCannon, phaserArray, photonTorpedo } from "@/game/weapons/instances"
 import { lifeSupport } from "@/game/components"
 import { SolarSystems } from "@/game/types"
@@ -18,18 +18,16 @@ export const constitution = (): Ship => {
 		type: ShipClass.Cruiser,
 		faction: ShipFaction.Federation,
 		solarSystem: SolarSystems.Earth,
+		status: ShipReadyStatus.Green,
 		x: 0,
 		y: 0,
-		forwardWeapons: [
+		weapons: [
 			phaserArray,
 			phaserArray,
+			photonTorpedo,
 			photonTorpedo
 		],
-			aftWeapons: [
-			phaserArray,
-			photonTorpedo
-		],
-			shipSystems: [
+		shipSystems: [
 			lifeSupport
 		]
 	}
@@ -50,18 +48,16 @@ export const d7 = (): Ship => {
 		type: ShipClass.Cruiser,
 		faction: ShipFaction.Klingon,
 		solarSystem: SolarSystems.Earth,
+		status: ShipReadyStatus.Red,
 		x: -2,
 		y: -5,
-		forwardWeapons: [
+		weapons: [
 			disruptorCannon,
 			disruptorCannon,
 			disruptorCannon,
 			photonTorpedo
 		],
-			aftWeapons: [
-			photonTorpedo
-		],
-			shipSystems: [
+		shipSystems: [
 			lifeSupport
 		]
 	}

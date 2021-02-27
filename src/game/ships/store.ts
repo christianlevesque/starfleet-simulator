@@ -1,7 +1,7 @@
 import { Action, ApplicationState } from "@/tools/definitions/general"
-import { FireOnShip, Ship, ShipMovement } from "@/game/ships/types"
+import { FireOnShip, Ship, ShipMovement, ShipReadyStatus } from "@/game/ships/types"
 import { createGuid } from "@/tools/utils"
-import { calculateDistance, calculateNeededDilithium, calculateMoveCost, shipCanMove, DILITHIUM_CONVERSION_FACTOR } from "@/game/utils"
+import { calculateDistance, calculateMoveCost, calculateNeededDilithium, DILITHIUM_CONVERSION_FACTOR, shipCanMove } from "@/game/utils"
 import { calculateBaseDamage, calculateBleedDamage, calculateHullDamage, calculateShieldDamage, weaponCanFire } from "@/game/combatUtils"
 
 export const ADD_SHIP = "ADD_SHIP"
@@ -9,6 +9,9 @@ export const MOVE_SHIP = "MOVE_SHIP"
 export const CONVERT_DILITHIUM = "CONVERT_DILITHIUM"
 export const FIRE_ON_SHIP = "FIRE_ON_SHIP"
 export const DESTROY_SHIP = "DESTROY_SHIP"
+export const STAND_DOWN = "STAND_DOWN"
+export const GO_YELLOW_ALERT = "GO_YELLOW_ALERT"
+export const GO_RED_ALERT = "GO_RED_ALERT"
 
 export function addShip(ship: Ship): Action<Ship> {
 	return {
@@ -42,6 +45,24 @@ export function destroyShip(id: string): Action<string> {
 	return {
 		type: DESTROY_SHIP,
 		payload: id
+	}
+}
+
+export function standDown(): Action<unknown> {
+	return {
+		type: STAND_DOWN
+	}
+}
+
+export function goYellowAlert(): Action<unknown> {
+	return {
+		type: GO_YELLOW_ALERT
+	}
+}
+
+export function goRedAlert(): Action<unknown> {
+	return {
+		type: GO_RED_ALERT
 	}
 }
 
@@ -112,7 +133,7 @@ function fireOnShipCase(ships: Ship[], combat: FireOnShip): Ship[] {
 	const source = ships.find(s => s.id === combat.sourceId)
 	const target = ships.find(s => s.id === combat.targetId)
 
-	source.forwardWeapons.forEach(weapon => {
+	source.weapons.forEach(weapon => {
 		if (!weaponCanFire(source, weapon))
 			return
 
@@ -143,4 +164,12 @@ function fireOnShipCase(ships: Ship[], combat: FireOnShip): Ship[] {
 
 function destroyShipCase(ships: Ship[], id: string): Ship[] {
 	return ships.filter(s => s.id !== id)
+}
+
+function standDownCase(ships: Ship[]): Ship[] {
+	const player = ships.find(s => s.id === "player")
+	player.status = ShipReadyStatus.Green
+	player.weapons.forEach(w => w.active = false)
+
+	return [...ships]
 }

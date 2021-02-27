@@ -25,6 +25,17 @@ const Stats: React.FunctionComponent<PlayerProps> = ({ player }: PlayerProps): J
 		<article>
 			<h1>U.S.S. Enterprise</h1>
 			<p>Location: {player.solarSystem} ({player.x}, {player.y})</p>
+			<ul>
+				<li>
+					<button>Stand Down</button>
+				</li>
+				<li>
+					<button>Yellow Alert</button>
+				</li>
+				<li>
+					<button>Red Alert</button>
+				</li>
+			</ul>
 			<table>
 				<thead>
 				<tr>

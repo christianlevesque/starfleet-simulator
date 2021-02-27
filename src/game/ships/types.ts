@@ -7,6 +7,12 @@ export enum ShipClass {
 	Tactical = "Tactical"
 }
 
+export enum ShipReadyStatus {
+	Green = "green",
+	Yellow = "yellow",
+	Red = "red"
+}
+
 export enum ShipFaction {
 	Federation = "Federation",
 	Klingon = "Klingon",
@@ -28,10 +34,10 @@ export type Ship = {
 	type: ShipClass,
 	faction: ShipFaction,
 	solarSystem: SolarSystems,
+	status: ShipReadyStatus,
 	x: number,
 	y: number,
-	forwardWeapons: Weapon[],
-	aftWeapons: Weapon[],
+	weapons: Weapon[],
 	shipSystems: Component[]
 }
 

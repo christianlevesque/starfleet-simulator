@@ -3,7 +3,7 @@ import { Ship } from "@/game/ships/types"
 
 export type Action<TPayload> = {
 	type: string,
-	payload: TPayload
+	payload?: TPayload
 }
 
 // Redux state definition
