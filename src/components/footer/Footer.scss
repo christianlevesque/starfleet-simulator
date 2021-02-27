@@ -1,0 +1,6 @@
+@import "/src/sass/imports";
+
+.footer {
+	@include make-padded-widget;
+	text-align: center;
+}
