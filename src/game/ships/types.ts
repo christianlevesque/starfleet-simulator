@@ -2,15 +2,15 @@ import { Weapon } from "@/game/weapons/types"
 import { Component, SolarSystems } from "@/game/types"
 
 export enum ShipClass {
-	Cruiser,
-	Science,
-	Tactical
+	Cruiser = "Cruiser",
+	Science = "Science",
+	Tactical = "Tactical"
 }
 
 export enum ShipFaction {
-	Federation,
-	Klingon,
-	Romulan
+	Federation = "Federation",
+	Klingon = "Klingon",
+	Romulan = "Romulan"
 }
 
 export type Ship = {
@@ -39,4 +39,9 @@ export type ShipMovement = {
 	id: string,
 	x: number,
 	y: number
+}
+
+export type FireOnShip = {
+	sourceId: string,
+	targetId: string
 }
