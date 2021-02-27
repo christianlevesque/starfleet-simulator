@@ -6,7 +6,7 @@ import { SolarSystems } from "@/game/types"
 export const constitution = (): Ship => {
 	return {
 		dilithium: 2500,
-			maxDilithium: 2500,
+		maxDilithium: 2500,
 		energy: 2500,
 		maxEnergy: 2500,
 		hp: 10000,
@@ -36,7 +36,7 @@ export const constitution = (): Ship => {
 export const d7 = (): Ship => {
 	return {
 		dilithium: 2500,
-			maxDilithium: 2500,
+		maxDilithium: 2500,
 		energy: 2500,
 		maxEnergy: 2500,
 		hp: 10000,

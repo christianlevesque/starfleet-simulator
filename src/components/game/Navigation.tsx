@@ -1,13 +1,22 @@
 import * as React from "react"
 import { useState } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { convertDilithium, moveShip, playerSelector } from "@/game/ships/store"
 
 const Navigation: React.FunctionComponent = (): JSX.Element => {
 
+	const dispatch = useDispatch()
 	const [xCoord, setXCoord] = useState(0)
 	const [yCoord, setYCoord] = useState(0)
+	const player = useSelector(playerSelector)
 
 	function setShipLocation() {
-
+		dispatch(moveShip({
+			id: player.id,
+			x: xCoord,
+			y: yCoord
+		}))
+		dispatch(convertDilithium(player.id))
 	}
 
 	return (

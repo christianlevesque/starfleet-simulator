@@ -6,6 +6,10 @@ const state = combineReducers({
 	ships: shipsReducer
 })
 
-const store: Store<CombinedState<ApplicationState>> = createStore(state)
+const store: Store<CombinedState<ApplicationState>> = createStore(
+	state,
+	// @ts-ignore
+	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+)
 
 export default store

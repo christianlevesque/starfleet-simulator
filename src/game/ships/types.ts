@@ -32,3 +32,9 @@ export type Ship = {
 	aftWeapons: Weapon[],
 	shipSystems: Component[]
 }
+
+export type ShipMovement = {
+	id: string,
+	x: number,
+	y: number
+}
