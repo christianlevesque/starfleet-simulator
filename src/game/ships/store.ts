@@ -2,11 +2,13 @@ import { Action, ApplicationState } from "@/tools/definitions/general"
 import { FireOnShip, Ship, ShipMovement } from "@/game/ships/types"
 import { createGuid } from "@/tools/utils"
 import { calculateDistance, calculateNeededDilithium, calculateMoveCost, shipCanMove, DILITHIUM_CONVERSION_FACTOR } from "@/game/utils"
+import { calculateBaseDamage, calculateBleedDamage, calculateHullDamage, calculateShieldDamage, weaponCanFire } from "@/game/combatUtils"
 
 export const ADD_SHIP = "ADD_SHIP"
 export const MOVE_SHIP = "MOVE_SHIP"
 export const CONVERT_DILITHIUM = "CONVERT_DILITHIUM"
 export const FIRE_ON_SHIP = "FIRE_ON_SHIP"
+export const DESTROY_SHIP = "DESTROY_SHIP"
 
 export function addShip(ship: Ship): Action<Ship> {
 	return {
@@ -36,6 +38,13 @@ export function fireOnShip(combat: FireOnShip): Action<FireOnShip> {
 	}
 }
 
+export function destroyShip(id: string): Action<string> {
+	return {
+		type: DESTROY_SHIP,
+		payload: id
+	}
+}
+
 export function playerSelector(state: ApplicationState): Ship {
 	return state.ships.find(s => s?.id === "player")
 }
@@ -50,6 +59,8 @@ export default function(ships: Ship[] = [], action: Action<unknown>): Ship[] {
 			return convertDilithiumCase(ships, action.payload as string)
 		case FIRE_ON_SHIP:
 			return fireOnShipCase(ships, action.payload as FireOnShip)
+		case DESTROY_SHIP:
+			return destroyShipCase(ships, action.payload as string)
 		default:
 			return ships
 	}
@@ -102,26 +113,34 @@ function fireOnShipCase(ships: Ship[], combat: FireOnShip): Ship[] {
 	const target = ships.find(s => s.id === combat.targetId)
 
 	source.forwardWeapons.forEach(weapon => {
-		if (source.energy < weapon.useCost)
+		if (!weaponCanFire(source, weapon))
 			return
 
 		source.energy -= weapon.useCost
 
-		const distance = calculateDistance(source.x, target.x, source.y, target.y)
-		const dissipation = distance * weapon.dissipation
-		const damage = weapon.damageBase - (weapon.damageBase * dissipation)
+		const damage = calculateBaseDamage(source, target, weapon)
+
 		if (target.shields > 0) {
 			// regular shield damage
-			target.shields -= damage * weapon.shieldMx
+			target.shields -= calculateShieldDamage(damage, weapon)
 			if (target.shields < 0)
 				target.shields = 0
 
 			// bleed damage
-			target.hp -= damage * weapon.hullMx * weapon.bleed
+			target.hp -= calculateBleedDamage(damage, weapon)
+			if (target.hp < 0)
+				target.hp = 0
 		}
-		else
-			target.hp -= damage * weapon.hullMx
+		else {
+			target.hp -= calculateHullDamage(damage, weapon)
+			if (target.hp < 0)
+				target.hp = 0
+		}
 	})
 
 	return [...ships]
+}
+
+function destroyShipCase(ships: Ship[], id: string): Ship[] {
+	return ships.filter(s => s.id !== id)
 }

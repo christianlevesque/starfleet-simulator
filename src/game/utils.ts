@@ -1,4 +1,4 @@
-import { Ship, ShipClass } from "@/game/ships/types"
+import { Ship, ShipClass, ShipFaction } from "@/game/ships/types"
 
 export const DILITHIUM_CONVERSION_FACTOR = 100
 
@@ -42,4 +42,13 @@ export function shipCanMove(ship: Ship, x: number, y: number): boolean {
 
 export function calculateNeededDilithium(energy: number, maxEnergy: number) {
 	return Math.floor((maxEnergy - energy) / DILITHIUM_CONVERSION_FACTOR)
+}
+
+export function getShipIcon(faction: ShipFaction): string {
+	if (faction === ShipFaction.Federation)
+		return "B"
+	else if (faction === ShipFaction.Klingon)
+		return "E"
+	else if (faction === ShipFaction.Romulan)
+		return "Y"
 }
