@@ -40,6 +40,11 @@ const Stats: React.FunctionComponent<PlayerProps> = ({ player }: PlayerProps): J
 					<td>{getStatus(player.hp/player.maxHp)}</td>
 				</tr>
 				<tr>
+					<td>Shields</td>
+					<td>{player.shields}/{player.maxShields}</td>
+					<td>{getStatus(player.shields/player.maxShields)}</td>
+				</tr>
+				<tr>
 					<td>Crew</td>
 					<td>{player.crew}/{player.maxCrew}</td>
 					<td>{getStatus(player.crew/player.maxCrew)}</td>
