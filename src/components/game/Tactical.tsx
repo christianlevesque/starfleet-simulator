@@ -2,7 +2,7 @@ import * as React from "react"
 import { useDispatch } from "react-redux"
 
 import { Ship } from "@/game/ships/types"
-import { fireOnShip } from "@/game/ships/store"
+import { convertDilithium, fireOnShip } from "@/game/ships/store"
 
 type TacticalProps = {
 	player: Ship
@@ -18,6 +18,7 @@ const Tactical: React.FunctionComponent<TacticalProps> = ({ player, enemies }: T
 			sourceId: player.id,
 			targetId: id
 		}))
+		dispatch(convertDilithium(player.id))
 	}
 
 	return (
