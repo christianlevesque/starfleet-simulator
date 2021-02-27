@@ -3,6 +3,8 @@
  *
  * This is from the perspective of the owner of the effect, not the giver of the effect. So a weapon-based effect on a target Component that targets Self will actually target the ship or component carrying the Effect.
  */
+import { Ship } from "@/game/ships/types"
+
 export enum Targets {
 	Self,
 	Ally,
@@ -69,4 +71,16 @@ export type Component = {
 	active: boolean
 	activeEffects: Effect[]
 	causesEffects: Effect[]
+}
+
+export enum SolarSystems {
+	Earth = "Earth",
+	Vulcan = "Vulcan",
+	Risa = "Risa",
+	Denobula = "Denobula",
+	Andoria = "Andoria"
+}
+
+export type PlayerProps = {
+	player: Ship
 }

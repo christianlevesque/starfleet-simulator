@@ -1,0 +1,25 @@
+@font-face {
+	font-family: "Trekbats";
+	src: url("/fonts/Trekbats.ttf") format("truetype");
+}
+@font-face {
+	font-family: "Context Ultra Condensed";
+	src: url("/fonts/Context_Ultra_Condensed.ttf") format("truetype");
+}
+
+html {
+	font-family: "Context Ultra Condensed", sans-serif;
+	font-size: 20px;
+}
+
+body {
+	font-size: 30px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: normal;
+}
+
+.trek-icon {
+	font-family: "Trekbats", sans-serif;
+}

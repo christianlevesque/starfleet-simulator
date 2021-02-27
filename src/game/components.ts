@@ -1,7 +1,7 @@
 import { Component } from "@/game/types"
 import { lifeSupportNominal } from "@/game/componentEffects"
 
-export const LifeSupport: Component = {
+export const lifeSupport: Component = {
 	name: "Life Support",
 	description: "Life Support maintains the living conditions on its vessel. Disruptions to Life Support descrease crew efficiency.",
 	hpMax: 1000,

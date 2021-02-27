@@ -1,0 +1,32 @@
+@import "/src/sass/imports";
+
+.system-map-wrapper {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: center;
+}
+.system-map {
+	display: grid;
+	grid-template-columns: repeat(11, 40px);
+	grid-template-rows: repeat(11, 40px);
+	background-color: $black;
+	grid-gap: 1px;
+	padding: $spacer-1;
+
+	& > * {
+		background-color: white;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	@for $i from -5 through 5 {
+		.x#{$i} {
+			grid-column-start: $i+6;
+		}
+		.y#{$i} {
+			grid-row-start: -($i+7);
+		}
+	}
+}

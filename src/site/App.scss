@@ -1,5 +1,7 @@
 @import "../sass/imports";
 
+@import "./Main";
+
 .app {
 	position: relative;
 	width: 100%;
@@ -9,5 +11,13 @@
 }
 
 .app__body {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+}
+
+.app__panel {
+	width: 48%;
 	flex-grow: 1;
 }
