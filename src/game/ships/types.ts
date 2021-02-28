@@ -29,6 +29,7 @@ export type Ship = {
 	maxHp: number,
 	shields: number,
 	maxShields: number,
+	battery: number,
 	crew: number,
 	maxCrew: number,
 	type: ShipClass,

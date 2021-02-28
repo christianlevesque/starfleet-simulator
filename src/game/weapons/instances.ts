@@ -13,7 +13,7 @@ export const phaserArray: Weapon = {
 	bleed: 0,
 	dissipation: 0.05,
 	active: false,
-	baselineCost: 25,
+	baselineCost: 50,
 	useCost: 100,
 	activeEffects: [],
 	causesEffects: []

@@ -1,9 +1,8 @@
 import { Action, ApplicationState } from "@/tools/definitions/general"
 import { FireOnShip, Ship, ShipMovement, ShipReadyStatus } from "@/game/ships/types"
 import { createGuid } from "@/tools/utils"
-import { moveWithinSystem, replenishEnergy, shipCanMove } from "@/game/shipUtils"
+import { activateComponent, lowerShields, moveWithinSystem, raiseShields, replenishEnergy, shipCanMove, standDownComponent, useActiveComponent } from "@/game/shipUtils"
 import { dealDamage, weaponCanFire } from "@/game/combatUtils"
-import { useActiveComponent } from "@/game/shipUtils"
 
 export const ADD_SHIP = "ADD_SHIP"
 export const MOVE_SHIP = "MOVE_SHIP"
@@ -83,6 +82,12 @@ export default function(ships: Ship[] = [], action: Action<unknown>): Ship[] {
 			return fireOnShipCase(ships, action.payload as FireOnShip)
 		case DESTROY_SHIP:
 			return destroyShipCase(ships, action.payload as string)
+		case STAND_DOWN:
+			return standDownCase(ships)
+		case GO_YELLOW_ALERT:
+			return goYellowAlertCase(ships)
+		case GO_RED_ALERT:
+			return goRedAlertCase(ships)
 		default:
 			return ships
 	}
@@ -144,7 +149,26 @@ function destroyShipCase(ships: Ship[], id: string): Ship[] {
 function standDownCase(ships: Ship[]): Ship[] {
 	const player = ships.find(s => s.id === "player")
 	player.status = ShipReadyStatus.Green
-	player.weapons.forEach(w => w.active = false)
+	player.weapons.forEach(w => standDownComponent(player, w))
+	lowerShields(player)
+
+	return [...ships]
+}
+
+function goYellowAlertCase(ships: Ship[]): Ship[] {
+	const player = ships.find(s => s.id === "player")
+	player.status = ShipReadyStatus.Yellow
+	player.weapons.forEach(w => standDownComponent(player, w))
+	raiseShields(player)
+
+	return [...ships]
+}
+
+function goRedAlertCase(ships: Ship[]): Ship[] {
+	const player = ships.find(s => s.id === "player")
+	player.status = ShipReadyStatus.Red
+	player.weapons.forEach(w => activateComponent(player, w))
+	raiseShields(player)
 
 	return [...ships]
 }

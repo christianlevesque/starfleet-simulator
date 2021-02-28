@@ -1,7 +1,7 @@
 import { Ship } from "@/game/ships/types"
 import { Weapon } from "@/game/weapons/types"
-import { calculateDistance } from "@/game/utils"
 import { ComponentEffect } from "@/game/types"
+import { calculateDistance } from "@/game/shipUtils"
 
 export function weaponCanFire(ship: Ship, weapon: Weapon): boolean {
 	if (ship.energy < weapon.useCost)
