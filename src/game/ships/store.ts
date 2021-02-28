@@ -1,8 +1,8 @@
 import { Action, ApplicationState } from "@/tools/definitions/general"
 import { FireOnShip, Ship, ShipMovement, ShipReadyStatus } from "@/game/ships/types"
 import { createGuid } from "@/tools/utils"
-import { calculateDistance, calculateMoveCost, calculateNeededDilithium, DILITHIUM_CONVERSION_FACTOR, moveWithinSystem, replenishEnergy, shipCanMove } from "@/game/utils"
-import { calculateBaseDamage, calculateBleedDamage, calculateHullDamage, calculateShieldDamage, dealDamage, weaponCanFire } from "@/game/combatUtils"
+import { moveWithinSystem, replenishEnergy, shipCanMove } from "@/game/shipUtils"
+import { dealDamage, weaponCanFire } from "@/game/combatUtils"
 import { useActiveComponent } from "@/game/shipUtils"
 
 export const ADD_SHIP = "ADD_SHIP"
