@@ -1,7 +1,7 @@
 import * as React from "react"
 import { useDispatch } from "react-redux"
 import { PlayerProps } from "@/game/types"
-import { goRedAlert, goYellowAlert, standDown } from "@/game/ships/store"
+import { convertDilithium, goRedAlert, goYellowAlert, standDown } from "@/game/ships/store"
 
 function getStatus(x: number) {
 	switch(true) {
@@ -18,7 +18,7 @@ function getStatus(x: number) {
 		case x > 0:
 			return "Critical"
 		default:
-			return "Destroyed"
+			return "Offline"
 	}
 }
 
@@ -29,6 +29,7 @@ const Stats: React.FunctionComponent<PlayerProps> = ({ player }: PlayerProps): J
 	const greenAlert = () => dispatch(standDown())
 	const yellowAlert = () => dispatch(goYellowAlert())
 	const redAlert = () => dispatch(goRedAlert())
+	const replenishPower = () => dispatch(convertDilithium("player"))
 
 	return (
 		<article>
@@ -48,6 +49,7 @@ const Stats: React.FunctionComponent<PlayerProps> = ({ player }: PlayerProps): J
 			<table>
 				<thead>
 				<tr>
+					<th/>
 					<th/>
 					<th/>
 					<th/>
@@ -73,6 +75,7 @@ const Stats: React.FunctionComponent<PlayerProps> = ({ player }: PlayerProps): J
 					<td>Energy</td>
 					<td>{player.energy}/{player.maxEnergy}</td>
 					<td>{getStatus(player.energy/player.maxEnergy)}</td>
+					<td><button onClick={replenishPower}>Restore</button></td>
 				</tr>
 				<tr>
 					<td>Battery</td>
