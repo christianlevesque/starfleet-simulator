@@ -40,8 +40,25 @@ export function shipCanMove(ship: Ship, x: number, y: number): boolean {
 	return true
 }
 
-export function calculateNeededDilithium(energy: number, maxEnergy: number) {
+export function moveWithinSystem(ship: Ship, x: number, y: number): void {
+	const distance = calculateDistance(ship.x, x, ship.y, y)
+	ship.energy -= calculateMoveCost(ship.type, distance)
+
+	ship.x = x
+	ship.y = y
+}
+
+export function calculateNeededDilithium(energy: number, maxEnergy: number): number {
 	return Math.floor((maxEnergy - energy) / DILITHIUM_CONVERSION_FACTOR)
+}
+
+export function replenishEnergy(ship: Ship): void {
+	const neededDilithium = calculateNeededDilithium(ship.energy, ship.maxEnergy)
+
+	const amountToConvert = Math.min(ship.dilithium, neededDilithium)
+
+	ship.dilithium -= amountToConvert
+	ship.energy += amountToConvert * DILITHIUM_CONVERSION_FACTOR
 }
 
 export function getShipIcon(faction: ShipFaction): string {

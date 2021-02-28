@@ -1,8 +1,9 @@
 import { Action, ApplicationState } from "@/tools/definitions/general"
 import { FireOnShip, Ship, ShipMovement, ShipReadyStatus } from "@/game/ships/types"
 import { createGuid } from "@/tools/utils"
-import { calculateDistance, calculateMoveCost, calculateNeededDilithium, DILITHIUM_CONVERSION_FACTOR, shipCanMove } from "@/game/utils"
-import { calculateBaseDamage, calculateBleedDamage, calculateHullDamage, calculateShieldDamage, weaponCanFire } from "@/game/combatUtils"
+import { calculateDistance, calculateMoveCost, calculateNeededDilithium, DILITHIUM_CONVERSION_FACTOR, moveWithinSystem, replenishEnergy, shipCanMove } from "@/game/utils"
+import { calculateBaseDamage, calculateBleedDamage, calculateHullDamage, calculateShieldDamage, dealDamage, weaponCanFire } from "@/game/combatUtils"
+import { useActiveComponent } from "@/game/shipUtils"
 
 export const ADD_SHIP = "ADD_SHIP"
 export const MOVE_SHIP = "MOVE_SHIP"
@@ -100,11 +101,7 @@ function moveShipCase(ships: Ship[], payload: ShipMovement): Ship[] {
 		if (!shipCanMove(s, payload.x, payload.y))
 			return s
 
-		const distance = calculateDistance(s.x, payload.x, s.y, payload.y)
-		s.energy = s.energy - calculateMoveCost(s.type, distance)
-
-		s.x = payload.x
-		s.y = payload.y
+		moveWithinSystem(s, payload.x, payload.y)
 
 		return s
 	})
@@ -118,12 +115,7 @@ function convertDilithiumCase(ships: Ship[], id: string): Ship[] {
 		if (s.dilithium < 1)
 			return s
 
-		const neededDilithium = calculateNeededDilithium(s.energy, s.maxEnergy)
-
-		const amountToConvert = Math.min(s.dilithium, neededDilithium)
-
-		s.dilithium -= amountToConvert
-		s.energy += amountToConvert * DILITHIUM_CONVERSION_FACTOR
+		replenishEnergy(s)
 
 		return s
 	})
@@ -137,26 +129,9 @@ function fireOnShipCase(ships: Ship[], combat: FireOnShip): Ship[] {
 		if (!weaponCanFire(source, weapon))
 			return
 
-		source.energy -= weapon.useCost
+		useActiveComponent(source, weapon)
 
-		const damage = calculateBaseDamage(source, target, weapon)
-
-		if (target.shields > 0) {
-			// regular shield damage
-			target.shields -= calculateShieldDamage(damage, weapon)
-			if (target.shields < 0)
-				target.shields = 0
-
-			// bleed damage
-			target.hp -= calculateBleedDamage(damage, weapon)
-			if (target.hp < 0)
-				target.hp = 0
-		}
-		else {
-			target.hp -= calculateHullDamage(damage, weapon)
-			if (target.hp < 0)
-				target.hp = 0
-		}
+		dealDamage(source, target, weapon)
 	})
 
 	return [...ships]

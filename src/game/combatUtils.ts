@@ -35,3 +35,24 @@ export function calculateHullDamage(baseDamage: number, weapon: Weapon): number 
 export function calculateBleedDamage(baseDamage: number, weapon: Weapon): number {
 	return baseDamage * weapon.hullMx * weapon.bleed
 }
+
+export function dealDamage(source: Ship, target: Ship, weapon: Weapon): void {
+	const damage = calculateBaseDamage(source, target, weapon)
+
+	if (target.shields > 0) {
+		// regular shield damage
+		target.shields -= calculateShieldDamage(damage, weapon)
+		if (target.shields < 0)
+			target.shields = 0
+
+		// bleed damage
+		target.hp -= calculateBleedDamage(damage, weapon)
+		if (target.hp < 0)
+			target.hp = 0
+	}
+	else {
+		target.hp -= calculateHullDamage(damage, weapon)
+		if (target.hp < 0)
+			target.hp = 0
+	}
+}
