@@ -16,7 +16,7 @@ const SystemMap: React.FunctionComponent = (): JSX.Element => {
 		<>
 			{ships && (
 				<div className="system-map-wrapper">
-					<section className="app__panel system-map">
+					<section className="system-map">
 						{new Array(11).fill(1).map((val, x) => {
 							return new Array(11).fill(1).map((val, y) => {
 								const xcoord = x - 5

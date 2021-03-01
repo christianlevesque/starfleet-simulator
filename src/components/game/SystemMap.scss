@@ -10,9 +10,8 @@
 	display: grid;
 	grid-template-columns: repeat(11, 40px);
 	grid-template-rows: repeat(11, 40px);
-	background-color: $black;
+	background-color: $ui-dark;
 	grid-gap: 1px;
-	padding: $spacer-1;
 
 	& > * {
 		background-color: white;

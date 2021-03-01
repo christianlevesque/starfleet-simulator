@@ -5,8 +5,8 @@ import { playerSelector } from "@/game/ships/store"
 import Stats from "@/components/game/Stats"
 import Navigation from "@/components/game/Navigation"
 import { ApplicationState } from "@/tools/definitions/general"
-import { Simulate } from "react-dom/test-utils"
 import Tactical from "@/components/game/Tactical"
+import SystemMap from "@/components/game/SystemMap"
 
 const Hud: React.FunctionComponent = (): JSX.Element => {
 
@@ -14,31 +14,45 @@ const Hud: React.FunctionComponent = (): JSX.Element => {
 	const enemies = useSelector((s: ApplicationState) => s.ships.filter(s => player && s.solarSystem === player.solarSystem && s.id !== player.id))
 
 	return (
-		<section className="app__panel hud">
-			<h1>HUD</h1>
-			<nav>
-				<NavLink to="/">Status</NavLink>
-				<NavLink to="/navigation">Navigation</NavLink>
-				<NavLink to="/tactical">Tactical</NavLink>
-			</nav>
-			<Switch>
-				<Route
-					exact
-					path="/"
-				>
-					<Stats player={player} />
-				</Route>
-				<Route path="/navigation">
-					<Navigation />
-				</Route>
-				<Route path="/tactical">
-					<Tactical
-						player={player}
-						enemies={enemies}
-					/>
-				</Route>
-			</Switch>
-		</section>
+		<article className="lcars lcars--inner">
+			<header className="lcars__heading-wrapper">
+				<h2 className="lcars__heading">HUD</h2>
+			</header>
+
+			<div className="lcars__menu"/>
+			<div className="lcars__inner-corner"/>
+			<div className="lcars__inner-corner lcars__inner-corner--bottom"/>
+
+			<section className="lcars__hud">
+				<div className="lcars__hud-split-panel">
+					<SystemMap />
+				</div>
+				<div className="lcars__hud-split-panel">
+					<Switch>
+						<Route
+							exact
+							path="/"
+						>
+							<Stats player={player} />
+						</Route>
+						<Route path="/navigation">
+							<Navigation />
+						</Route>
+						<Route path="/tactical">
+							<Tactical
+								player={player}
+								enemies={enemies}
+							/>
+						</Route>
+					</Switch>
+				</div>
+			</section>
+
+			<section className="lcars__footer-wrapper">
+
+			</section>
+
+		</article>
 	)
 }
 

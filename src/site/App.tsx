@@ -10,6 +10,7 @@ import SystemMap from "@/components/game/SystemMap"
 import Hud from "@/components/game/Hud"
 import { addShip } from "@/game/ships/store"
 import store from "@/site/store"
+import LCARS from "@/site/LCARS"
 
 const App = (): JSX.Element => {
 
@@ -17,6 +18,8 @@ const App = (): JSX.Element => {
 
 	const player = constitution()
 	player.id = "player"
+	player.name = "USS Enterprise"
+	player.designation = "NCC-1701"
 
 	const enemy = d7()
 
@@ -27,8 +30,7 @@ const App = (): JSX.Element => {
 		<Provider store={store}>
 			<div className="app">
 				<main className="app__body">
-					<SystemMap />
-					<Hud />
+					<LCARS />
 				</main>
 
 				<Footer/>

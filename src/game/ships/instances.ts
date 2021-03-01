@@ -5,6 +5,8 @@ import { SolarSystems } from "@/game/types"
 
 export const constitution = (): Ship => {
 	return {
+		name: "",
+		designation: "",
 		dilithium: 2500,
 		maxDilithium: 2500,
 		energy: 10000,
@@ -36,6 +38,8 @@ export const constitution = (): Ship => {
 
 export const d7 = (): Ship => {
 	return {
+		name: "IKS Vengeance",
+		designation: "45447",
 		dilithium: 2500,
 		maxDilithium: 2500,
 		energy: 2500,

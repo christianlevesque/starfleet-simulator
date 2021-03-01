@@ -1,0 +1,17 @@
+@import "/src/sass/imports";
+
+.table {
+	display: grid;
+	grid-auto-flow: row;
+	.table__row {
+
+	}
+
+	.table__cell {
+
+	}
+
+	&.table--4 {
+		grid-template-columns: repeat(4, auto);
+	}
+}

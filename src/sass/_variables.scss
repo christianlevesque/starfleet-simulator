@@ -68,8 +68,9 @@ $black: $dark-gray;
 
 
 // Theme
-$primary: $purple;
-$primary-light: $light-purple;
+$primary: $yellow;
+$primary-light: $light-yellow;
+$primary-dark: $dark-yellow;
 
 $secondary: $green;
 $secondary-light: $light-green;
@@ -82,6 +83,9 @@ $info-light: $light-pink;
 
 $warning: $red;
 $warning-light: $light-red;
+
+$ui-dark: #111;
+$ui-light: $light-gray;
 
 
 // Spacing

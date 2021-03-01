@@ -21,6 +21,8 @@ export enum ShipFaction {
 
 export type Ship = {
 	id?: string,
+	name: string,
+	designation: string,
 	dilithium: number,
 	maxDilithium: number,
 	energy: number,

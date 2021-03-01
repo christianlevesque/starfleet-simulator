@@ -1,3 +1,5 @@
+@import "/src/sass/imports";
+
 @font-face {
 	font-family: "Trekbats";
 	src: url("/fonts/Trekbats.ttf") format("truetype");
@@ -10,6 +12,13 @@
 html {
 	font-family: "Context Ultra Condensed", sans-serif;
 	font-size: 20px;
+	background-color: $ui-dark;
+	color: $primary;
+	box-sizing: border-box;
+}
+
+*, *:before, *:after {
+	box-sizing: inherit;
 }
 
 body {
@@ -20,6 +29,11 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: normal;
 }
 
+table {
+	margin-right: 0;
+}
+
 .trek-icon {
 	font-family: "Trekbats", sans-serif;
+	color: $ui-dark;
 }

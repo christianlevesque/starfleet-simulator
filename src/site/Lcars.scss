@@ -1,0 +1,218 @@
+@import "/src/sass/imports";
+
+$lcars-bg: $ui-dark;
+$lcars-bar-bg: $primary-dark;
+$lcars-bar-bg-hover: $primary;
+$lcars-header-height: 60px;
+$lcars-outer-corner-radius: $lcars-header-height;
+$lcars-inner-corner-radius: $lcars-outer-corner-radius / 3;
+$lcars-spacer: 4px;
+
+.lcars {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 16% 4% auto;
+	grid-template-rows: $lcars-header-height $lcars-header-height auto $lcars-header-height $lcars-header-height;
+	grid-template-areas:
+		"menu headerspacer header"
+		"menu headerspacer body"
+		"menu bodyspacer body"
+		"menu footerspacer body"
+		"menu footerspacer footer";
+	grid-gap: 0;
+	color: $lcars-bar-bg-hover;
+
+	@include make-padded-widget;
+
+	.lcars__heading-wrapper,
+	.lcars__footer-wrapper {
+		grid-area: header;
+		display: flex;
+		justify-content: flex-end;
+		padding-right: $spacer-5;
+		text-align: right;
+		background-color: $lcars-bar-bg;
+		border-top-right-radius: $lcars-outer-corner-radius;
+		border-bottom-right-radius: $lcars-outer-corner-radius;
+
+		.lcars__heading {
+			display: inline;
+			background-color: $lcars-bg;
+			margin: 0;
+			padding: 0 $spacer-2;
+			font-size: 3rem;
+		}
+	}
+
+	.lcars__footer-wrapper {
+		grid-area: footer;
+		justify-content: space-between;
+	}
+
+	.lcars__inner-corner {
+		grid-area: headerspacer;
+		height: 100%;
+		background-color: $lcars-bar-bg;
+		position: relative;
+
+		&:after {
+			content: "";
+			position: absolute;
+			bottom: 0;
+			right: 0;
+			width: 100%;
+			height: 50%;
+			background-color: $lcars-bg;
+			border-top-left-radius: $lcars-inner-corner-radius;
+		}
+
+		&.lcars__inner-corner--bottom {
+			grid-area: footerspacer;
+			&:after {
+				bottom: initial;
+				top: 0;
+				border-top-left-radius: 0;
+				border-bottom-left-radius: $lcars-inner-corner-radius;
+			}
+		}
+	}
+
+	.lcars__menu {
+		grid-area: menu;
+		padding-top: 2 * $lcars-header-height;
+		background-color: $lcars-bar-bg;
+		border-top-left-radius: $lcars-outer-corner-radius;
+		border-bottom-left-radius: $lcars-outer-corner-radius;
+	}
+
+	.lcars__hud {
+		grid-area: body;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+	}
+
+	.lcars__hud-split-panel {
+		width: 48%;
+		flex-grow: 1;
+
+		@include make-padded-widget;
+	}
+
+	.lcars__button-group {
+		display: flex;
+		flex-direction: column;
+
+		.lcars__button {
+			text-transform: uppercase;
+			text-align: right;
+			text-decoration: none;
+			color: $ui-dark;
+			padding: $spacer-1;
+			margin: 0;
+			border: none;
+			border-bottom: ($lcars-spacer / 2) solid $lcars-bg;
+			border-top: ($lcars-spacer / 2) solid $lcars-bg;
+			background-color: $lcars-bar-bg;
+			cursor: pointer;
+
+			&:focus {
+				outline: none;
+			}
+
+			&:hover {
+				background-color: $lcars-bar-bg-hover;
+			}
+
+			&:first-of-type {
+				border-top-width: $lcars-spacer;
+			}
+			&:last-of-type {
+				border-bottom-width: $lcars-spacer;
+			}
+		}
+
+		&.lcars__button-group--horizontal {
+			flex-direction: row;
+			flex-wrap: nowrap;
+			justify-content: center;
+
+			.lcars__button {
+				border: none;
+				border-left: ($lcars-spacer / 2) solid $lcars-bg;
+				border-right: ($lcars-spacer / 2) solid $lcars-bg;
+				color: $lcars-bg;
+				background-color: $lcars-bar-bg;
+
+				&.lcars__button--green-alert {
+					color: $dark-green;
+					background-color: $light-green;
+					&:hover {
+						color: $light-green;
+						background-color: $dark-green;
+					}
+				}
+				&.lcars__button--yellow-alert {
+					color: $dark-yellow;
+					background-color: $yellow;
+					&:hover {
+						color: $yellow;
+						background-color: $dark-yellow;
+					}
+				}
+				&.lcars__button--red-alert {
+					color: $dark-red;
+					background-color: $red;
+					&:hover {
+						color: $red;
+						background-color: $dark-red;
+					}
+				}
+
+				&:first-of-type {
+					border-left-width: $lcars-spacer;
+				}
+
+				&:last-of-type {
+					border-right-width: $lcars-spacer;
+				}
+			}
+		}
+	}
+
+	&.lcars--inner {
+		grid-template-columns: auto 4% 16%;
+		grid-template-areas:
+			"header headerspacer menu"
+			"body headerspacer menu"
+			"body bodyspacer menu"
+			"body footerspacer menu"
+			"footer footerspacer menu";
+
+		.lcars__heading-wrapper,
+		.lcars__footer-wrapper {
+			justify-content: flex-start;
+			padding-left: $spacer-5;
+			border-radius: $lcars-outer-corner-radius 0 0 $lcars-outer-corner-radius;
+		}
+
+		.lcars__inner-corner {
+			&:after {
+				border-top-left-radius: 0;
+				border-top-right-radius: $lcars-inner-corner-radius;
+			}
+
+			&.lcars__inner-corner--bottom {
+				&:after {
+					border-top-right-radius: 0;
+					border-bottom-left-radius: 0;
+					border-bottom-right-radius: $lcars-inner-corner-radius;
+				}
+			}
+		}
+
+		.lcars__menu {
+			border-radius: 0 $lcars-outer-corner-radius $lcars-outer-corner-radius 0;
+		}
+	}
+}

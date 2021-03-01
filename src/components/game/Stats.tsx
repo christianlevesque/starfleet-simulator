@@ -1,7 +1,10 @@
 import * as React from "react"
 import { useDispatch } from "react-redux"
 import { PlayerProps } from "@/game/types"
-import { convertDilithium, goRedAlert, goYellowAlert, standDown } from "@/game/ships/store"
+import { convertDilithium } from "@/game/ships/store"
+import Table from "@/components/ui/Table"
+import TableRow from "@/components/ui/TableRow"
+import TableCell from "@/components/ui/TableCell"
 
 function getStatus(x: number) {
 	switch(true) {
@@ -25,70 +28,41 @@ function getStatus(x: number) {
 const Stats: React.FunctionComponent<PlayerProps> = ({ player }: PlayerProps): JSX.Element => {
 
 	const dispatch = useDispatch()
-
-	const greenAlert = () => dispatch(standDown())
-	const yellowAlert = () => dispatch(goYellowAlert())
-	const redAlert = () => dispatch(goRedAlert())
 	const replenishPower = () => dispatch(convertDilithium("player"))
 
 	return (
 		<article>
-			<h1>U.S.S. Enterprise</h1>
-			<p>Location: {player.solarSystem} ({player.x}, {player.y})</p>
-			<ul>
-				<li>
-					<button onClick={greenAlert}>Stand Down</button>
-				</li>
-				<li>
-					<button onClick={yellowAlert}>Yellow Alert</button>
-				</li>
-				<li>
-					<button onClick={redAlert}>Red Alert</button>
-				</li>
-			</ul>
-			<table>
-				<thead>
-				<tr>
-					<th/>
-					<th/>
-					<th/>
-					<th/>
-				</tr>
-				</thead>
-				<tbody>
-				<tr>
-					<td>Hull</td>
-					<td>{player.hp}/{player.maxHp}</td>
-					<td>{getStatus(player.hp/player.maxHp)}</td>
-				</tr>
-				<tr>
-					<td>Shields</td>
-					<td>{player.shields}/{player.maxShields}</td>
-					<td>{getStatus(player.shields/player.maxShields)}</td>
-				</tr>
-				<tr>
-					<td>Crew</td>
-					<td>{player.crew}/{player.maxCrew}</td>
-					<td>{getStatus(player.crew/player.maxCrew)}</td>
-				</tr>
-				<tr>
-					<td>Energy</td>
-					<td>{player.energy}/{player.maxEnergy}</td>
-					<td>{getStatus(player.energy/player.maxEnergy)}</td>
-					<td><button onClick={replenishPower}>Restore</button></td>
-				</tr>
-				<tr>
-					<td>Battery</td>
-					<td>{player.battery}/1000</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>Dilithium</td>
-					<td>{player.dilithium}/{player.maxDilithium}</td>
-					<td>{getStatus(player.dilithium/player.maxDilithium)}</td>
-				</tr>
-				</tbody>
-			</table>
+			<Table>
+				<TableCell>Hull</TableCell>
+				<TableCell>{player.hp}/{player.maxHp}</TableCell>
+				<TableCell>{getStatus(player.hp/player.maxHp)}</TableCell>
+				<TableCell/>
+
+				<TableCell>Shields</TableCell>
+				<TableCell>{player.shields}/{player.maxShields}</TableCell>
+				<TableCell>{getStatus(player.shields/player.maxShields)}</TableCell>
+				<TableCell/>
+
+				<TableCell>Crew</TableCell>
+				<TableCell>{player.crew}/{player.maxCrew}</TableCell>
+				<TableCell>{getStatus(player.crew/player.maxCrew)}</TableCell>
+				<TableCell/>
+
+				<TableCell>Energy</TableCell>
+				<TableCell>{player.energy}/{player.maxEnergy}</TableCell>
+				<TableCell>{getStatus(player.energy/player.maxEnergy)}</TableCell>
+				<TableCell><button onClick={replenishPower}>Restore</button></TableCell>
+
+				<TableCell>Battery</TableCell>
+				<TableCell>{player.battery}/1000</TableCell>
+				<TableCell/>
+				<TableCell/>
+
+				<TableCell>Dilithium</TableCell>
+				<TableCell>{player.dilithium}/{player.maxDilithium}</TableCell>
+				<TableCell>{getStatus(player.dilithium/player.maxDilithium)}</TableCell>
+				<TableCell/>
+			</Table>
 		</article>
 	)
 }
